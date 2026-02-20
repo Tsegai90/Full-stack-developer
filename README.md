@@ -90,7 +90,7 @@ This project was created to practice and demonstrate full-stack development skil
 ## 📬 Author
 
 Your Name  
-GitHub: https://github.com/your-username
+GitHub: https://github.com/Tsegai90/Full-stack-developer
 
 ---
 
