@@ -97,3 +97,38 @@ GitHub: https://github.com/Tsegai90/Full-stack-developer
 ## 📄 License
 
 This project is for learning and portfolio purposes.
+## Pre-selecting Radio Buttons in PHP
+
+The condition:
+
+```php
+if(isset($gender) && $gender=="male")
+is doing two checks at once:
+
+isset($gender) → checks whether the variable $gender exists.
+
+Usually this means it was sent from the form via $_POST['gender'].
+
+If the user didn’t select a radio button, $gender won’t exist.
+
+$gender == "male" → checks whether the value of $gender is "male".
+
+Only true if the user selected the “Male” option in the form.
+
+✅ Both conditions must be true (that’s why we use &&) for the PHP code to echo checked and pre-select the radio button in the HTML.
+
+In words:
+
+“If the form sent a value for gender and that value is "male", mark this radio button as selected.”
+
+
+- Save the file (`Ctrl+S` / `Cmd+S`).
+
+---
+
+## 3️⃣ Stage your changes
+
+In the terminal:
+
+```bash
+git add README.md
