@@ -132,3 +132,38 @@ In the terminal:
 
 ```bash
 git add README.md
+  # PHP OOP Example – Fruit & Strawberry
+
+This is a simple PHP Object-Oriented Programming (OOP) example demonstrating:
+
+- Classes
+- Inheritance
+- Constructors
+- Methods
+- Object creation
+
+## 📌 Project Description
+
+This project contains:
+
+- A parent class `Fruit`
+- A child class `Strawberry` that extends `Fruit`
+
+The script creates a Strawberry object and displays its properties.
+
+## 🧠 Concepts Used
+
+- Class
+- Object
+- Constructor
+- Inheritance
+- Method calling
+
+## ▶️ How to Run (Using PHP Built-in Server)
+
+1. Make sure PHP is installed on your system.
+2. Open a terminal/command prompt.
+3. Navigate to the project folder:
+
+```bash
+cd path/to/php-oop-fruit-example
