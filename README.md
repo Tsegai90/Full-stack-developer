@@ -232,4 +232,6 @@ if ($result->num_rows > 0) {
 
 // Close connection
 $conn->close();
-?>
+?>git add .
+git commit -m "Update guestbook functionality"
+git push
