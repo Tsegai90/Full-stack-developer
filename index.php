@@ -1,38 +1,64 @@
-<html lang="en">
-<body>
-
 <?php
+$servername = "localhost";
+$username = "awet";
+$password = "awet4007";
+$dbname = "mydatabase";
 
-// Configuration class with constants
-class Config {
-    const DB_HOST = "localhost";        // MySQL server
-    const DB_USER = "myuser";           // Your MySQL username
-    const DB_PASS = "StrongPass123!";   // Your MySQL password
-    const DB_NAME = "my_database";      // Your database name
-}
-
-// Create a new MySQLi connection using constants
-$mysqli = new mysqli(Config::DB_HOST, Config::DB_USER, Config::DB_PASS, Config::DB_NAME);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
-if ($mysqli->connect_error) {
-    die("Database connection failed: " . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Success message
-echo "Connected successfully to database '" . Config::DB_NAME . "'";
+// Create table if it doesn't exist
+$sql = "CREATE TABLE IF NOT EXISTS MyGuests (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    firstname VARCHAR(30) NOT NULL,
+    lastname VARCHAR(30) NOT NULL,
+    email VARCHAR(50),
+    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)";
+$conn->query($sql);
 
-// Example query
-$result = $mysqli->query("SELECT NOW() AS new_time");
+// Handle form submission
+if (isset($_POST['submit'])) {
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $email = $_POST['email'];
 
-if ($result) {
-    $row = $result->fetch_assoc();
-    echo "<br>Current database time: " . $row['new_time'];
-} else {
-    echo "<br>Error executing query: " . $mysqli->error;
+    $stmt = $conn->prepare("INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $firstname, $lastname, $email);
+    $stmt->execute();
+    $stmt->close();
+
+    echo "<p style='color:green;'>New guest added successfully!</p>";
 }
-
 ?>
 
-</body>
-</html>
+<!-- HTML form outside PHP block -->
+<h2>Guestbook</h2>
+<form method="POST" action="">
+  Firstname: <input type="text" name="firstname" required><br>
+  Lastname: <input type="text" name="lastname" required><br>
+  Email: <input type="email" name="email"><br>
+  <input type="submit" name="submit" value="Submit">
+</form>
+
+<?php
+// Display all guests
+$result = $conn->query("SELECT * FROM MyGuests ORDER BY reg_date DESC");
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo "<p>" . htmlspecialchars($row['firstname']) . " " . htmlspecialchars($row['lastname']) .
+             " - " . htmlspecialchars($row['email']) . " (Registered: " . $row['reg_date'] . ")</p>";
+    }
+} else {
+    echo "<p>No entries yet.</p>";
+}
+
+// Close connection
+$conn->close();
+?>
